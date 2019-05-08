@@ -1,13 +1,14 @@
 **Setup**
 
-The first thing to do is to run the [landoop/fast-data-dev](https://github.com/Landoop/fast-data-dev) Docker image. For example: 
+The first thing to do is to run the [landoop/fast-data-dev](https://github.com/Landoop/fast-data-dev) Docker image. For example:
 
 ```
 docker run --rm -it -p 2181:2181 -p 3030:3030 -p 8081:8081 -p 8082:8082 -p 8083:8083 -p 9092:9092 -p 9581:9581 -p 9582:9582 -p 9583:9583 -p 9584:9584 -e ADV_HOST=127.0.0.1 landoop/fast-data-dev:latest
 ```
+
 _Note: Please follow the instructions on [fast-data-dev README](https://github.com/Landoop/fast-data-dev) to customize the container._
 
-You can execute a bash shell at the running container as follow: 
+You can execute a bash shell at the running container as follow:
 
 ```
 docker run --rm -it --net=host landoop/fast-data-dev bash
@@ -86,7 +87,7 @@ You can enter a few new values from the console as follows:
 You can begin a consumer from the beginning of the log as follows:
 
 ```
-kafka-console-consumer --bootstrap-server localhost:9092 --topic my-topic --from-beginning
+kafka-console-consumer --bootstrap-server localhost:9092 --from-beginning --property print.key=true --topic my-topic
 ```
 
 You can consume a single message as follows:
@@ -141,7 +142,7 @@ You can set the retention for a topic as follows:
 
 ```
 kafka-configs --zookeeper localhost:2181 --alter --entity-type topics --entity-name my-topic --add-config retention.ms=3600000
-``` 
+```
 
 You can print all configuration overrides for a topic named `my-topic` as follows:
 
@@ -152,7 +153,7 @@ kafka-configs --zookeeper localhost:2181 --describe --entity-type topics --entit
 You can delete a configuration override for `retention.ms` for a topic named `my-topic` as follows:
 
 ```
-kafka-configs --zookeeper localhost:2181 --alter --entity-type topics --entity-name my-topic --delete-config retention.ms 
+kafka-configs --zookeeper localhost:2181 --alter --entity-type topics --entity-name my-topic --delete-config retention.ms
 ```
 
 # Performance
@@ -160,20 +161,19 @@ kafka-configs --zookeeper localhost:2181 --alter --entity-type topics --entity-n
 Although Kafka is pretty fast by design, it is good to be able to test its performance.
 You can check the Produce performance of Kafka as follows:
 
-
 ```
 kafka-producer-perf-test --topic position-reports --throughput 10000 --record-size 300 --num-records 20000 --producer-props bootstrap.servers="localhost:9092"
 ```
 
 # ACLs
 
-You can add a new *consumer* ACL to an existing topic as follows:
+You can add a new _consumer_ ACL to an existing topic as follows:
 
 ```
 kafka-acls --authorizer-properties zookeeper.connect=localhost:2181 --add --allow-principal User:Bob --consumer --topic topicA --group groupA
 ```
 
-You can add a new *producer* ACL to an existing topic as follows:
+You can add a new _producer_ ACL to an existing topic as follows:
 
 ```
 kafka-acls --authorizer-properties zookeeper.connect=localhost:2181 --add --allow-principal User:Bob --producer --topic topicA
@@ -185,10 +185,10 @@ You can list the ACLs of a topic named `topicA` as follows:
 kafka-acls --authorizer-properties zookeeper.connect=localhost:2181 --list --topic topicA
 ```
 
-# Zookeeper 
+# Zookeeper
 
 You can enter the zookeeper shell as follows:
 
 ```
-zookeeper-shell localhost:2182 ls 
+zookeeper-shell localhost:2182 ls
 ```
