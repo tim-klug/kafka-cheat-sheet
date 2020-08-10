@@ -108,6 +108,12 @@ You can consume and specify a consumer group as follows:
 kafka-console-consumer --topic my-topic --new-consumer --bootstrap-server localhost:9092 --consumer-property group.id=my-group
 ```
 
+Get all offset information for a group
+
+```
+kafka-consumer-groups --bootstrap-server localhost:9092 --group GROUPNAME --describe
+```
+
 ## Consume Avro messages
 
 You can consume 10 Avro messages from a topic named `position-reports` as follows:
