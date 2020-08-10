@@ -54,6 +54,12 @@ You can see the under-replicated partitions for all topics as follows:
 kafka-topics --zookeeper localhost:2181/kafka-cluster --describe --under-replicated-partitions
 ```
 
+Set the offset to a specific one
+
+```
+kafka-consumer-groups --bootstrap-server localhost:9092 --group cpo_import_consumer --reset-offsets --topic c3po_cogon.dev_import_topic:0 --to-latest --execute
+```
+
 # Producers
 
 You can produce messages from standard input as follows:
