@@ -57,7 +57,7 @@ kafka-topics --zookeeper localhost:2181/kafka-cluster --describe --under-replica
 Set the offset to a specific one
 
 ```
-kafka-consumer-groups --bootstrap-server localhost:9092 --group cpo_import_consumer --reset-offsets --topic c3po_cogon.dev_import_topic:0 --to-latest --execute
+kafka-consumer-groups --bootstrap-server localhost:9092 --group cpo_import_consumer --reset-offsets --topic my_topic:0 --to-latest --execute
 ```
 
 # Producers
@@ -72,6 +72,18 @@ You can produce new messages from an existing file named `messages.txt` as follo
 
 ```
 kafka-console-producer --broker-list localhost:9092 --topic test < messages.txt
+```
+
+You can produce new json messages from a file as follows:
+
+```
+kafka-console-producer --broker-list localhost:9092 --topic topic-name --property "parse.key=true" --property "key.separator=:" < message.txt
+```
+
+and in the `message.txt` something like this:
+
+```
+89f444c4-7322-44b2-b5a9-6fb080ce7456:{ someJson:{} }
 ```
 
 You can produce Avro messages as follows:
